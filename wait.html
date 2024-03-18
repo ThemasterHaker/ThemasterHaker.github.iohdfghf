@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wait</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Gothic', sans-serif;
+            background-color: #111;
+            color: #fff;
+        }
+
+        .wait-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        h2 {
+            font-size: 36px;
+            margin-bottom: 30px;
+            color: #ff6666;
+        }
+
+        .timer {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff6666;
+        }
+
+        .hacker-theme {
+            color: #ff6666;
+        }
+    </style>
+</head>
+<body class="hacker-theme">
+    <div class="wait-container">
+        <h2>Too many wrong attempts!</h2>
+        <p>Please wait for <span id="timer" class="timer">05:00</span> before trying again.</p>
+    </div>
+    <script>
+        const waitTime = 5 * 60; // 5 minutes in seconds
+        let countdownTimer;
+
+        countdownTimer = setInterval(updateTimer, 1000);
+
+        function updateTimer() {
+            const timerElement = document.getElementById('timer');
+            let timer = timerElement.textContent.split(':');
+            let minutes = parseInt(timer[0], 10);
+            let seconds = parseInt(timer[1], 10);
+
+            // Decrease the timer
+            if (seconds > 0) {
+                seconds--;
+            } else {
+                if (minutes === 0) {
+                    clearInterval(countdownTimer);
+                    // Redirect back to login page
+                    window.location.href = 'login.html';
+                    return;
+                }
+                minutes--;
+                seconds = 59;
+            }
+
+            // Update timer display
+            timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+    </script>
+</body>
+</html>
